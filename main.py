@@ -69,15 +69,15 @@ def start_timer():
         if reps%8 == 0: 
             state = 'break'
             ticks.set("□ □ □ □")
-            countdown(LONG_BREAK_MIN*60)
+            countdown(LONG_BREAK_MIN-10)
             
         elif reps%2 == 0:
             state = 'break'
-            countdown(SHORT_BREAK_MIN*60)
+            countdown(SHORT_BREAK_MIN)
         
         else:
             state = 'work'
-            countdown(WORK_MIN*60)
+            countdown(WORK_MIN-15)
 
 # ---------------------------- COUNTDOWN MECHANISM ------------------------------- # 
 
@@ -88,10 +88,10 @@ def countdown(count):
     if running:
         canvas.itemconfig(timer_text,text = f'{minutes:02}:{seconds:02}')
     print(count, reps,state)
-    if count>0 and running:
+    if count>0 and running and start_button_var.get():
          window.after(1000,countdown,count - 1)
     else:
-        if state == 'work' and running:
+        if state == 'work' and running and start_button_var.get():
             current_ticks = ticks.get()
             new_ticks = current_ticks.replace("□", BLACK_SQUARE, 1)
             ticks.set(new_ticks)
